@@ -1,0 +1,9 @@
+---
+- hosts: test-kitchen
+
+  vars:
+    logstash_heap_size: "256m"
+
+  roles:
+    - wunzeco.java
+    - ansible-logstash
