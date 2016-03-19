@@ -65,4 +65,4 @@
     - Restart logstash
   
 - name: Start logstash
-  service: name=logstash state=started
+  service: name=logstash enabled=yes state=started
