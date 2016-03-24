@@ -4,7 +4,7 @@
   apt_key: url="{{ logstash_signing_key_url }}" state=present
 
 
-- name: Add the repository definition to apt sources list
+- name: Add logstash apt repository definition to apt sources list
   apt_repository: repo="{{ logstash_apt_repo }}" update_cache=yes state=present
 
 - name: Install logstash
