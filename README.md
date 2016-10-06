@@ -33,6 +33,13 @@ This role has been tested with Logstash v2.2 only
     - wunzeco.logstash
 ```
 
+> *Resources that may help with multiline config:*
+>    - For multiline config examples:
+>        https://www.elastic.co/guide/en/beats/filebeat/master/multiline-examples.html
+>    - To test regexp patterns:
+>        https://play.golang.org/p/uAd5XHxscu
+
+
 ## Dependencies:
 
 None
