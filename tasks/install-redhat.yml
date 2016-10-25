@@ -1,0 +1,19 @@
+---
+
+- name: Download and install logstash gpg public signing key
+  rpm_key:
+    key:   "{{ logstash_signing_key_url }}"
+    state: present
+
+- name: Add logstash yum repository for logstash
+  template:
+    src:   logstash.yum.repo.j2
+    dest:  /etc/yum.repos.d/logstash.repo
+    owner: root
+    group: root
+    mode:  0644
+
+- name: Install logstash
+  yum:
+    name:  "logstash-{{ logstash_version|default('*') }}"
+    state: present

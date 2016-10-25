@@ -21,9 +21,14 @@ logstash_kill_on_stop_timeout: 0
 
 ############
 ##  Package
-logstash_version: 2.2
+logstash_version:            '1:2.2.4-1'          # OR '*' for latest
+logstash_normalized_version: "{{ logstash_version.split(':')|last }}"
+logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
+logstash_minor_version:      "{{ logstash_normalized_version.split('.')[1] }}"
+logstash_repo_version:       "{{ logstash_major_version }}.{{ logstash_minor_version }}"
 logstash_signing_key_url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
-logstash_apt_repo: "deb http://packages.elastic.co/logstash/{{ logstash_version }}/debian stable main"
+logstash_apt_repo: "deb http://packages.elastic.co/logstash/{{ logstash_repo_version }}/debian stable main"
+logstash_yum_repo_baseurl: "http://packages.elastic.co/logstash/{{ logstash_repo_version }}/centos"
 
 ###########
 ##  Config

@@ -1,14 +1,7 @@
 ---
 
-- name: Download and install logstash apt public signing key
-  apt_key: url="{{ logstash_signing_key_url }}" state=present
-
-
-- name: Add logstash apt repository definition to apt sources list
-  apt_repository: repo="{{ logstash_apt_repo }}" update_cache=yes state=present
-
-- name: Install logstash
-  apt: name=logstash state=present
+- name: Logstash Install
+  include: "install-{{ ansible_os_family|lower }}.yml"
 
 - name: Ensure logstash home dir is created
   file: 

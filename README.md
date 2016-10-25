@@ -1,9 +1,8 @@
 Logstash
 ========
 
-Ansible role to install and configure Logstash.
+Ansible role to install and configure Logstash v2.x.
 
-This role has been tested with Logstash v2.2 only
 
 *Note:* Logstash requires Java 1.7+
 
@@ -13,7 +12,7 @@ This role has been tested with Logstash v2.2 only
 - hosts: loghost
 
   vars:
-    logstash_version: 2.2
+    logstash_version: 2.2.4
     logstash_input_configs: 
       - |
         file { 
@@ -38,6 +37,15 @@ This role has been tested with Logstash v2.2 only
 >        https://www.elastic.co/guide/en/beats/filebeat/master/multiline-examples.html
 >    - To test regexp patterns:
 >        https://play.golang.org/p/uAd5XHxscu
+
+
+## Testing
+
+To test this role, run
+
+```
+kitchen test
+```
 
 
 ## Dependencies:

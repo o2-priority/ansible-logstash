@@ -1,0 +1,6 @@
+[logstash-{{ logstash_repo_version }}]
+name=Logstash repository for {{ logstash_repo_version }}.x packages
+baseurl={{ logstash_yum_repo_baseurl }}
+gpgcheck=1
+gpgkey={{ logstash_signing_key_url }}
+enabled=1
