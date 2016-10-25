@@ -5,7 +5,7 @@
     key:   "{{ logstash_signing_key_url }}"
     state: present
 
-- name: Add logstash yum repository for logstash
+- name: Add logstash yum repository
   template:
     src:   logstash.yum.repo.j2
     dest:  /etc/yum.repos.d/logstash.repo
