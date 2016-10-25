@@ -26,9 +26,9 @@ logstash_normalized_version: "{{ logstash_version.split(':')|last }}"
 logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
 logstash_minor_version:      "{{ logstash_normalized_version.split('.')[1] }}"
 logstash_repo_version:       "{{ logstash_major_version }}.{{ logstash_minor_version }}"
-logstash_signing_key_url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
-logstash_apt_repo: "deb http://packages.elastic.co/logstash/{{ logstash_repo_version }}/debian stable main"
-logstash_yum_repo_baseurl: "http://packages.elastic.co/logstash/{{ logstash_repo_version }}/centos"
+logstash_signing_key_url:    "https://packages.elastic.co/GPG-KEY-elasticsearch"
+logstash_apt_repo:           "deb http://packages.elastic.co/logstash/{{ logstash_repo_version }}/debian stable main"
+logstash_yum_repo_baseurl:   "http://packages.elastic.co/logstash/{{ logstash_repo_version }}/centos"
 
 ###########
 ##  Config
