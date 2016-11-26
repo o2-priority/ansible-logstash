@@ -12,7 +12,7 @@ Ansible role to install and configure Logstash v2.x.
 - hosts: loghost
 
   vars:
-    logstash_version: 2.2.4
+    logstash_version: '1:2.2.4-1'
     logstash_input_configs: 
       - |
         file { 
