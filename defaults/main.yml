@@ -22,7 +22,8 @@ logstash_kill_on_stop_timeout: 0
 ############
 ##  Package
 logstash_version:            '1:2.2.4-1'
-logstash_normalized_version: "{{ logstash_version.split(':')|last }}"
+logstash_normalized_version: "{{ logstash_version.split(':')|last + '.str' }}"   # adding '.str' to workaround "'float object' has no attribute 'split'" error
+                                                                                 # noticed with Ansible v2.1 if logstash_version is indeed a float e.g. 2.4
 logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
 logstash_minor_version:      "{{ logstash_normalized_version.split('.')[1] }}"
 logstash_repo_version:       "{{ logstash_major_version }}.{{ logstash_minor_version }}"
