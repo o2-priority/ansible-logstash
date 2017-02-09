@@ -2,7 +2,7 @@
 
 - name: Validate logstash config
   command: >
-      "{{ logstash_install_dir }}/bin/logstash"
+      "{{ logstash_bin_dir }}/logstash"
         --configtest --config "{{ logstash_conf_dir }}"
 
 - name: Restart logstash

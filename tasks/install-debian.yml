@@ -5,11 +5,19 @@
     url:   "{{ logstash_signing_key_url }}"
     state: present
 
-- name: Add logstash apt repository definition to apt sources list
+- name: Add logstash apt repository definition to apt sources list | v2.x or earlier
+  apt_repository:
+    repo:         "{{ logstash_2_apt_repo }}"
+    update_cache: yes
+    state:        present
+  when: logstash_major_version|int < 5
+
+- name: Add logstash apt repository definition to apt sources list | v5.x or later
   apt_repository:
     repo:         "{{ logstash_apt_repo }}"
     update_cache: yes
     state:        present
+  when: logstash_major_version|int >= 5
 
 - name: Install logstash
   apt: 

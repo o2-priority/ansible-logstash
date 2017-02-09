@@ -3,6 +3,14 @@
 - name: Logstash Install
   include: "install-{{ ansible_os_family|lower }}.yml"
 
+#- pause: minutes=10
+
+- name: Set logstash home dir variable | v2.x or ealier only
+  set_fact: 
+    logstash_home_dir: '/var/lib/logstash'
+    logstash_bin_dir: "{{ logstash_install_dir }}/bin"
+  when: logstash_major_version|int < 5
+
 - name: Ensure logstash home dir is created
   file: 
     path:  "{{ logstash_home_dir }}" 
@@ -11,7 +19,40 @@
     mode:  0775
     state: directory
 
-- name: Create logstash input config
+- name: Create logstash settings file
+  template: 
+    src:   logstash.yml.j2
+    dest:  "{{ logstash_settings_dir }}/logstash.yml"
+    owner: root
+    group: root
+    mode:  0644
+  when: logstash_major_version|int >= 5
+  notify: 
+    - Restart logstash
+
+- name: Create logstash jvm.options settings file
+  template: 
+    src:   jvm.options.j2
+    dest:  "{{ logstash_settings_dir }}/jvm.options"
+    owner: root
+    group: root
+    mode:  0644
+  when: logstash_major_version|int >= 5
+  notify: 
+    - Restart logstash
+
+- name: Create logstash startup.options settings file
+  template: 
+    src:   startup.options.j2
+    dest:  "{{ logstash_settings_dir }}/startup.options"
+    owner: root
+    group: root
+    mode:  0644
+  when: logstash_major_version|int >= 5
+  notify: 
+    - Restart logstash
+
+- name: Create logstash pipeline input config
   template: 
     src:   input.conf.j2
     dest:  "{{ logstash_conf_dir }}/10-input.conf"
@@ -23,7 +64,7 @@
     - Validate logstash config
     - Restart logstash
 
-- name: Create logstash filter config
+- name: Create logstash pipeline filter config
   template: 
     src:   filter.conf.j2
     dest:  "{{ logstash_conf_dir }}/20-filter.conf"
@@ -35,7 +76,7 @@
     - Validate logstash config
     - Restart logstash
 
-- name: Create logstash output config
+- name: Create logstash pipeline output config
   template: 
     src:   output.conf.j2
     dest:  "{{ logstash_conf_dir }}/30-output.conf"
@@ -54,6 +95,7 @@
     owner: root
     group: root
     mode:  0644
+  when: logstash_major_version|int < 5
   notify: 
     - Restart logstash
   

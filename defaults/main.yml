@@ -2,11 +2,17 @@
 logstash_user:  logstash
 logstash_group: "{{ logstash_user }}"
 
-logstash_log_dir:     /var/log/logstash
-logstash_home_dir:    /var/lib/logstash
-logstash_conf_dir:    /etc/logstash/conf.d
-logstash_install_dir: /opt/logstash
-logstash_pid_dir:     /var/run
+logstash_log_dir:       /var/log/logstash
+#logstash_home_dir:      /var/lib/logstash
+logstash_settings_dir:  /etc/logstash
+logstash_conf_dir:      "{{ logstash_settings_dir }}/conf.d"
+logstash_install_dir:   /opt/logstash       # v2.x or earlier only
+logstash_pid_dir:       /var/run
+
+# v5.x
+logstash_home_dir:      /usr/share/logstash
+logstash_bin_dir:       "{{ logstash_home_dir }}/bin"
+logstash_plugins_dir:   "{{ logstash_home_dir }}/plugins"
 
 ####################
 ##  Default Settings
@@ -21,15 +27,18 @@ logstash_kill_on_stop_timeout: 0
 
 ############
 ##  Package
-logstash_version:            '1:2.2.4-1'
+logstash_version:            '1:5.2.0-1'
 logstash_normalized_version: "{{ logstash_version.split(':')|last + '.str' }}"   # adding '.str' to workaround "'float object' has no attribute 'split'" error
                                                                                  # noticed with Ansible v2.1 if logstash_version is indeed a float e.g. 2.4
 logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
 logstash_minor_version:      "{{ logstash_normalized_version.split('.')[1] }}"
 logstash_repo_version:       "{{ logstash_major_version }}.{{ logstash_minor_version }}"
-logstash_signing_key_url:    "https://packages.elastic.co/GPG-KEY-elasticsearch"
-logstash_apt_repo:           "deb http://packages.elastic.co/logstash/{{ logstash_repo_version }}/debian stable main"
-logstash_yum_repo_baseurl:   "http://packages.elastic.co/logstash/{{ logstash_repo_version }}/centos"
+logstash_signing_key_url:    "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+logstash_apt_repo:           "deb https://artifacts.elastic.co/packages/{{ logstash_major_version }}.x/apt stable main"
+logstash_yum_repo_baseurl:   "https://artifacts.elastic.co/packages/{{ logstash_major_version }}.x/yum"
+
+logstash_2_apt_repo:           "deb http://packages.elastic.co/logstash/{{ logstash_repo_version }}/debian stable main"
+logstash_2_yum_repo_baseurl:   "http://packages.elastic.co/logstash/{{ logstash_repo_version }}/centos"
 
 ###########
 ##  Config

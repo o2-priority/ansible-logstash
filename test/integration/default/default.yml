@@ -7,7 +7,7 @@
       redhat: 'java-1.8.0-openjdk'
     java_package: "{{ java_package_by_os_family[ansible_os_family|lower] }}"
     logstash_version_by_os_family:
-      debian: '1:2.2.4-1'
+      debian: '1:5.2.0-1'
       redhat: '2.4.0'
     logstash_version: "{{ logstash_version_by_os_family[ansible_os_family|lower] }}"
     logstash_heap_size: "256m"

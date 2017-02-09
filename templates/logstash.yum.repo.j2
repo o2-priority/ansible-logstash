@@ -1,6 +1,17 @@
-[logstash-{{ logstash_repo_version }}]
-name=Logstash repository for {{ logstash_repo_version }}.x packages
+{% if logstash_major_version|int >= 5 %} 
+[logstash-{{ logstash_major_version }}.x]
+name=Elastic repository for {{ logstash_major_version }}.x packages
 baseurl={{ logstash_yum_repo_baseurl }}
 gpgcheck=1
 gpgkey={{ logstash_signing_key_url }}
 enabled=1
+autorefresh=1
+type=rpm-md
+{% else %} 
+[logstash-{{ logstash_repo_version }}]
+name=Logstash repository for {{ logstash_repo_version }}.x packages
+baseurl={{ logstash_2_yum_repo_baseurl }}
+gpgcheck=1
+gpgkey={{ logstash_signing_key_url }}
+enabled=1
+{% endif %} 

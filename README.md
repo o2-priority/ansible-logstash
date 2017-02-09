@@ -1,7 +1,7 @@
 Logstash
 ========
 
-Ansible role to install and configure Logstash v2.x.
+Ansible role to install and configure Logstash v2.x & v5.x.
 
 
 *Note:* Logstash requires Java 1.7+
@@ -12,7 +12,7 @@ Ansible role to install and configure Logstash v2.x.
 - hosts: loghost
 
   vars:
-    logstash_version: '1:2.2.4-1'
+	logstash_version: '1:5.2.0-1'
     logstash_input_configs: 
       - |
         file { 
