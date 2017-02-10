@@ -102,6 +102,7 @@
 
 - name: Logstash Plugins
   include: plugins.yml
+  when: logstash_major_version|int >= 5
 
 - name: Start logstash
   service: name=logstash enabled=yes state=started
