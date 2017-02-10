@@ -8,7 +8,8 @@
 - name: Set logstash home dir variable | v2.x or ealier only
   set_fact: 
     logstash_home_dir: '/var/lib/logstash'
-    logstash_bin_dir: "{{ logstash_install_dir }}/bin"
+    logstash_bin_dir:  "{{ logstash_install_dir }}/bin"
+    logstash_config_validate_cmd:  "{{ logstash_2_config_validate_cmd }}"
   when: logstash_major_version|int < 5
 
 - name: Ensure logstash home dir is created

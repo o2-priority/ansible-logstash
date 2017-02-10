@@ -62,3 +62,6 @@ logstash_output_configs:
 logstash_update_plugins:  false
 logstash_plugins_install: []
 logstash_plugins_remove:  []
+
+logstash_config_validate_cmd:   "{{ logstash_bin_dir }}/logstash --config.test_and_exit --path.settings /etc/logstash"
+logstash_2_config_validate_cmd: "{{ logstash_bin_dir }}/logstash --configtest --config {{ logstash_conf_dir }}"
