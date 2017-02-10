@@ -98,6 +98,9 @@
   when: logstash_major_version|int < 5
   notify: 
     - Restart logstash
-  
+
+- name: Logstash Plugins
+  include: plugins.yml
+
 - name: Start logstash
   service: name=logstash enabled=yes state=started

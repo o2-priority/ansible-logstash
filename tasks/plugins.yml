@@ -1,0 +1,25 @@
+---
+
+- name: Get list of installed logstash plugins
+  shell: >
+      {{ logstash_bin_dir }}/logstash-plugin list
+  register: plugins
+  
+#- debug: var=plugins
+
+- name: Install logstash plugins
+  shell: >
+      {{ logstash_bin_dir }}/logstash-plugin install {{ item }}
+  with_items: "{{ logstash_plugins_install }}"
+  when: item not in plugins.stdout_lines and item not in logstash_plugins_remove
+
+- name: Remove logstash plugins
+  shell: >
+      {{ logstash_bin_dir }}/logstash-plugin remove {{ item }}
+  with_items: "{{ logstash_plugins_remove }}"
+  when: item in plugins.stdout_lines
+
+- name: Update installed logstash plugins
+  shell: >
+      {{ logstash_bin_dir }}/logstash-plugin update
+  when: logstash_update_plugins

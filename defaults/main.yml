@@ -57,3 +57,8 @@ logstash_output_configs:
     elasticsearch { 
             hosts => ["localhost:9200"] 
         }
+
+
+logstash_update_plugins:  false
+logstash_plugins_install: []
+logstash_plugins_remove:  []
