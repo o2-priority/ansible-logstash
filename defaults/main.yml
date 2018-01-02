@@ -24,6 +24,7 @@ logstash_nice:       19
 logstash_open_files: 16384
 logstash_use_gc_logging: false
 logstash_kill_on_stop_timeout: 0
+logstash_log_level: info
 
 ############
 ##  Package

@@ -152,7 +152,7 @@ path.config: /etc/logstash/conf.d
 #   * debug
 #   * trace
 #
-# log.level: info
+log.level: {{ logstash_log_level }}
 path.logs: /var/log/logstash
 #
 # ------------ Other Settings --------------
