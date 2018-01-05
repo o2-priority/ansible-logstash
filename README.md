@@ -1,7 +1,7 @@
 Logstash
 ========
 
-Ansible role to install and configure Logstash v2.x & v5.x.
+Ansible role to install and configure Logstash v5.x & v6.x.
 
 
 *Note:* Logstash requires Java 1.7+
@@ -12,20 +12,20 @@ Ansible role to install and configure Logstash v2.x & v5.x.
 - hosts: loghost
 
   vars:
-	logstash_version: '1:5.2.0-1'
-    logstash_input_configs: 
+	logstash_version: '1:6.1.0-1'
+    logstash_input_configs:
       - |
-        file { 
+        file {
                 path => ["/var/log/nginx/access.log"]
             }
-    logstash_output_configs: 
+    logstash_output_configs:
       - |
-        stdout { 
+        stdout {
                 codec => rubydebug
             }
       - |
-        elasticsearch { 
-                hosts => ["localhost:9200"] 
+        elasticsearch {
+                hosts => ["localhost:9200"]
             }
 
   roles:

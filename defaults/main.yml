@@ -19,7 +19,7 @@ logstash_plugins_dir:   "{{ logstash_home_dir }}/plugins"
 logstash_javacmd: /usr/bin/java
 logstash_opts:      []                # e.g. [ "--debug" ]
 logstash_java_opts: []
-logstash_heap_size: "1g" 
+logstash_heap_size: "1g"
 logstash_nice:       19
 logstash_open_files: 16384
 logstash_use_gc_logging: false
@@ -28,7 +28,7 @@ logstash_log_level: info
 
 ############
 ##  Package
-logstash_version:            '1:5.2.0-1'
+logstash_version:            '1:6.1.0-1'
 logstash_normalized_version: "{{ logstash_version.split(':')|last + '.str' }}"   # adding '.str' to workaround "'float object' has no attribute 'split'" error
                                                                                  # noticed with Ansible v2.1 if logstash_version is indeed a float e.g. 2.4
 logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
@@ -43,20 +43,20 @@ logstash_2_yum_repo_baseurl:   "http://packages.elastic.co/logstash/{{ logstash_
 
 ###########
 ##  Config
-logstash_input_configs: 
+logstash_input_configs:
   - |
-    file { 
+    file {
             path => ["/var/log/boot.log"]
        }
 logstash_filter_configs: []
-logstash_output_configs: 
+logstash_output_configs:
   - |
-    stdout { 
+    stdout {
             codec => rubydebug
         }
   - |
-    elasticsearch { 
-            hosts => ["localhost:9200"] 
+    elasticsearch {
+            hosts => ["localhost:9200"]
         }
 
 
