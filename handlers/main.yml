@@ -3,6 +3,8 @@
 - name: Validate logstash config
   shell: >
       {{ logstash_config_validate_cmd }}
+  args:
+    chdir: "{{ logstash_home_dir }}"
 
 - name: Restart logstash
   service: name=logstash state=restarted
