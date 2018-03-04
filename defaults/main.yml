@@ -28,7 +28,7 @@ logstash_log_level: info
 
 ############
 ##  Package
-logstash_version:            '1:6.1.0-1'
+logstash_version:            '1:6.2.2-1'
 logstash_normalized_version: "{{ logstash_version.split(':')|last + '.str' }}"   # adding '.str' to workaround "'float object' has no attribute 'split'" error
                                                                                  # noticed with Ansible v2.1 if logstash_version is indeed a float e.g. 2.4
 logstash_major_version:      "{{ logstash_normalized_version.split('.')|first }}"
