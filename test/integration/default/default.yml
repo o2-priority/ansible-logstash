@@ -13,7 +13,9 @@
     logstash_heap_size: "256m"
     logstash_plugins_install: [ logstash-filter-multiline, logstash-output-gelf ]
     logstash_plugins_remove:  [ logstash-output-gelf, logstash-input-zeromq ]
-    logstash_update_plugins:  true
+    #logstash_update_plugins:  true   # updating logstash plugins in flakey as of 04/03/2018
+                                      # so disabling it! See
+                                      # https://github.com/elastic/logstash/issues/9194
     logstash_input_configs:
       - |
         file {
