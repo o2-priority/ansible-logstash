@@ -3,8 +3,17 @@
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
 
--Xms256m
--Xmx1g
+
+{% set _heap_size_mb = ansible_memtotal_mb * 0.4 %}
+{% set _heap_size_gb = _heap_size_mb / 1024 %}
+{% if _heap_size_mb < 1024 %}
+{% set _heap_size_string = _heap_size_mb|int|string + 'm' %}
+{% else %}
+{% set _heap_size_string = _heap_size_gb|int|string + 'g' %}
+{% endif -%}
+
+-Xms{{ logstash_heap_size_min|default(_heap_size_string) }}
+-Xmx{{ logstash_heap_size_max|default(_heap_size_string) }}
 
 ################################################################
 ## Expert settings
