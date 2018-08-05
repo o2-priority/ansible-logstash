@@ -26,10 +26,10 @@ logstash_use_gc_logging: false
 logstash_kill_on_stop_timeout: 0
 logstash_log_level: info
 
-####################
+#########################
 ##  jvm.options Settings
-logstash_heap_size_min:      # e.g. "2g". Default is 40% of ansible_memtotal_mb
-logstash_heap_size_max:      # e.g. "2g". Default is 40% of ansible_memtotal_mb
+# logstash_heap_size_min:      # e.g. "2g". Default is 40% of ansible_memtotal_mb
+# logstash_heap_size_max:      # e.g. "2g". Default is 40% of ansible_memtotal_mb
 
 ############
 ##  Package

@@ -2,8 +2,6 @@
 
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
-
-
 {% set _heap_size_mb = ansible_memtotal_mb * 0.4 %}
 {% set _heap_size_gb = _heap_size_mb / 1024 %}
 {% if _heap_size_mb < 1024 %}
