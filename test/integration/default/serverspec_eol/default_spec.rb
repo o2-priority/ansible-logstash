@@ -1,4 +1,4 @@
-require 'spec_helper'
+require '/tmp/kitchen/spec/spec_helper.rb'
 
 logstash_bin_dir = '/usr/share/logstash/bin'
 logstash_log_dir = '/var/log/logstash'
