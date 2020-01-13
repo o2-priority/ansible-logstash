@@ -25,6 +25,18 @@
         beats {
                 port => 5044
            }
+      - |
+        generator {
+          lines => [
+            "type=LOGIN msg=audit(1578648601.679:8218): pid=18867 uid=0 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 old-auid=4294967295 auid=0 tty=(none) old-ses=4294967295 ses=739 res=1",
+            "type=CRED_ACQ msg=audit(1578648601.679:8217): pid=18867 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:crond_t:s0-s0:c0.c1023 msg='op=PAM:setcred grantors=pam_env,pam_unix acct=\"root\" exe=\"/usr/sbin/crond\" hostname=? addr=? terminal=cron res=success'",
+            "type=NETFILTER_CFG msg=audit(1578673388.183:929280): table=filter family=2 entries=0",
+            "type=SYSCALL msg=audit(1578673388.183:929280): arch=c000003e syscall=56 success=yes exit=5401 a0=70000011 a1=7ffdfd4cb410 a2=0 a3=0 items=0 ppid=5384 pid=5391 auid=4294967295 uid=1001 gid=1001 euid=1001 suid=1001 fsuid=1001 egid=1001 sgid=1001 fsgid=1001 tty=(none) ses=4294967295 comm=\"chrome\" exe=\"/opt/google/chrome/chrome\" key=(null)",
+            "type=USER_ACCT msg=audit(1578675576.836:929286): pid=11783 uid=0 auid=4294967295 ses=4294967295 msg='op=PAM:accounting acct=\"pmurphy\" exe=\"/usr/sbin/sshd\" hostname=10.101.101.80 addr=10.101.101.80 terminal=ssh res=success'"
+          ]
+          type => audit_log
+          count => 1
+        }
     logstash_filter_configs:
       - |
         if [source] =~ /var.log.boot.log/ {
@@ -38,6 +50,32 @@
                     source => "log"
                     what => "previous"
                 }
+            }
+      - |
+        if [type] == "audit_log" {
+              grok {
+                match => {
+                    "message" => [
+                      "%{AUDIT_PREFIX} %{AUDIT_KEY_VALUES:[auditd_kv]} old-auid=%{NUMBER:[auditd_old_auid]} auid=%{NUMBER:[auditd_new_auid]} tty=%{NOTSPACE} old-ses=%{NUMBER:[auditd_old_ses]} ses=%{NUMBER:[auditd_new_ses]} res=%{NOTSPACE:[auditd_result]}",
+                      "%{AUDIT_PREFIX} %{AUDIT_KEY_VALUES:[auditd_kv]} msg=['\"](%{DATA:[auditd_msg]}\s+)?%{AUDIT_KEY_VALUES:[auditd_sub_kv]} res=%{NOTSPACE:[auditd_result]}['\"]",
+                      "%{AUDIT_PREFIX} %{AUDIT_KEY_VALUES:[auditd_kv]} res=%{NOTSPACE:[auditd_result]}",
+                      "%{AUDIT_PREFIX}",
+                      "%{AUDIT_TYPE} %{AUDIT_KEY_VALUES:[auditd_kv]}"
+                    ]
+                }
+                pattern_definitions => {
+                    "AUDIT_TYPE" => "^type=%{NOTSPACE:[auditd_type]}"
+                    "AUDIT_PREFIX" => "%{AUDIT_TYPE} msg=audit\(%{NUMBER:[auditd_epoch]}:%{NUMBER:[auditd_sequence]}\):(%{DATA})?"
+                    "AUDIT_KEY_VALUES" => "%{WORD}=%{GREEDYDATA}"
+                }
+              }
+              date {
+                  match => [ "[auditd][log][epoch]", "UNIX" ]
+                  target => "@timestamp"
+              }
+              mutate {
+                  convert => { "[auditd][log][sequence]" => "integer" }
+              }
             }
     logstash_output_configs:
       - |
@@ -53,5 +91,5 @@
       #      }
 
   roles:
-    - wunzeco.java
+    - o2-priority.java
     - ansible-logstash
