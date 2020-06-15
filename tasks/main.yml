@@ -100,6 +100,14 @@
   notify: 
     - Restart logstash
 
+- name: Create Logstash logrotate config file
+  template:
+    src:   logrotate.j2
+    dest:  /etc/logrotate.d/logstash
+    owner: root
+    group: root
+    mode:  0644
+
 - name: Logstash Plugins
   include: plugins.yml
   when: logstash_major_version|int >= 5
